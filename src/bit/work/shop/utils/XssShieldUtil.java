@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 处理非法字符: 防止xxs攻击(许不能防止所有的xxs攻击)
+ * 处理非法字符: 防止xxs攻击(并不能防止所有的xxs攻击)
  */
 public class XssShieldUtil {
 
