@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	<constant name="struts.serve.static.browserCache" value="false"/>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.configuration.xml.reload" value="true" />
+    <constant name="struts.action.extension" value="action" />
+ 
+	<package name="base" extends="struts-default">
+		<global-results>
+			<result name="error">/WEB-INF/jsp/error.jsp</result>
+			<result name="exception">/WEB-INF/jsp/exception.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+   		 	<exception-mapping result="exception" exception="java.lang.Exception"/>
+   		 </global-exception-mappings>
+	</package>
+	
+	<package name="login" extends="base" namespace="/enter">
+		<interceptors>
+ 	         <interceptor name="permission" class="bit.work.shop.interceptor.LoginInterceptor" />
+ 	         <interceptor name="xxs" class="bit.work.shop.interceptor.XssInterceptor" />
+ 	         <interceptor-stack name="permissionStack">
+			 		<interceptor-ref name="defaultStack" />
+			 	 	<interceptor-ref name="permission" />
+			 	 	<interceptor-ref name="xxs" />
+ 	          </interceptor-stack>
+ 		</interceptors>
+		<default-interceptor-ref name="permissionStack"/>
+		
+		<!-- 用于微信服务器认证 wx_authenServer.action -->
+		<action name="wx_*" class="bit.work.shop.action.wx.Authentication" method="{1}">
+			<allowed-methods>authenServer</allowed-methods> 
+		</action>
+		
+		<action name="login_*" class="bit.work.shop.action.WXCode" method="{1}">
+			<result name="home" type="chain">homePage_getHome</result>
+			<allowed-methods>temp,getUserinfo</allowed-methods> 
+		</action>
+		<action name="homePage_*" class="bit.work.shop.action.HomeAction" method="{1}">
+			<result name="homeJsp">/WEB-INF/jsp/home.jsp</result>
+			<result name="prayJsp">/WEB-INF/jsp/directmess.jsp</result>
+			<result name="shakeJsp">/WEB-INF/jsp/shake.jsp</result>
+			<allowed-methods>getHome,getMoreMess,doZan,toPray,toShake</allowed-methods>
+		</action>
+		<action name="userPage_*" class="bit.work.shop.action.UserAction" method="{1}">
+			<result name="personalJsp">/WEB-INF/jsp/person.jsp</result>
+			<allowed-methods>getTargetHome</allowed-methods> 
+		</action>
+		
+		<action name="messPage_*" class="bit.work.shop.action.MessageAction" method="{1}">
+			<result type="redirectAction">homePage_getHome</result>
+			<allowed-methods>deleteMess,sendMess,getRandomMess</allowed-methods> 
+		</action>
+		
+	</package>
+	
+</struts>

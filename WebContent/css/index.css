@@ -1,0 +1,189 @@
+#signature{
+	margin-left: 130px;
+	margin-right: 10px;
+	width: auto;
+}
+#signature>p{
+	padding-top: 0;
+	padding-left: 0;
+	line-height: 18px;
+	color: white;
+	
+	/*文字溢出*/
+	letter-spacing:1.5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
+}
+
+
+/*本周热门*/
+.title{
+	height: 45px;
+	border-bottom: 1px solid rgb(255,180,146);
+	padding-left: 45px;
+	color: rgb(255,180,146);
+	font-weight: normal;
+	line-height: 45px;
+	/*padding-bottom: 10px;*/
+	margin-bottom: 15px;
+	/*margin-top: 25px;*/
+}
+#hottitle{
+	background-image: url(../img/weekhot.png);
+	background-repeat: no-repeat;
+	background-position: 15px 0px;
+	background-size: 30px;
+}
+
+/*本周最新*/
+#newtitle{
+	background-image: url(../img/weeknewest.png);
+	background-repeat: no-repeat;
+	background-position: 15px 0px;
+	background-size: 30px;
+}
+
+/*mask的渐显*/
+	.fade{
+		position: fixed;
+		display: none;
+		/*width: 0;
+		height: 0;*/
+		width: 100%;
+		height: 100%;
+		left: 0;
+		top: 0;
+		/*left: 50%;
+		top: 50%;*/
+		/*border-radius: 100px;*/
+		opacity: 0;
+		z-index: 2;
+		transition: all .5s;
+	}
+	.fade-show{
+		/*width: 100%;
+		height: 100%;*/
+		/*left: 0;
+		top: 0;*/
+		/*border-radius: 0;*/
+		opacity: 0.7;
+		background-color: white;
+	}
+	/*btn的旋转*/
+	.rotate{
+		position: fixed;
+		right:16px ;
+		bottom: 16px;
+		z-index: 3;
+		transform: rotate(0);
+		transition: all .5s;
+	}
+	.rotate>img{
+		width: 54px;
+		height: 54px;
+		/*border-radius: 27px;*/
+	}
+	.rotate-show{
+		transform: rotate(45deg);
+	}
+	
+	/*许愿图标等的动画*/
+	/*许愿图标等*/
+	.topray>a,.shake>a{
+		display: inline-block;
+		width: auto;
+		float: right;
+		
+	}
+	.topray{
+		position: absolute;
+		right: 21px;
+		bottom: 140px;
+		
+	}
+	.shake{
+		position: absolute;
+		right: 21px;
+		bottom: 80px;
+	}
+	
+	.topray>a>img,.shake>a>img{
+		width: 45px;
+		height: 45px;
+		/*position: absolute;*/
+		/*right: 10px;*/
+		/*bottom: 10px;*/
+		/*right: 10px;*/
+		/*margin-left: 20px;*/
+	}
+	
+	.topray>a>span,.shake>a>span{
+		display: inline-block;
+		position: absolute;
+		height: 25px;
+		width: 100px;
+		
+		right: 55px;
+		top: 10px;
+		line-height: 25px;
+		background-color: grey;
+		border-radius: 2px;
+		text-align: center;
+		color: black;
+		box-shadow: 0px 0px 5px #000000;
+	}
+	.shake>a>span{
+		width: 80px;
+	}
+	.span-anima{
+		-webkit-animation:showspan 1 linear .1s;
+	}
+	.span-anima2{
+		-webkit-animation:showspanB 1 linear .1s;
+	}
+	.icon-anima{
+		-webkit-animation:showicon 1 linear .1s;
+	}
+	/*span由左到右动画*/
+	@-webkit-keyframes showspan{
+		0%{
+			right: 20px;
+			top: 10px;
+			border-radius: 0;
+		}
+		100%{
+			right: 55px;
+			width: 100px;
+			top: 10px;
+			background-color: grey;
+			border-radius: 2px;
+		}
+	}
+	@-webkit-keyframes showspanB{
+		0%{
+			right: 20px;
+			top: 10px;
+			border-radius: 0;
+		}
+		100%{
+			right: 55px;
+			width: 80px;
+			top: 10px;
+			background-color: grey;
+			border-radius: 2px;
+		}
+	}
+	/*图标逐渐变大动画*/
+	@-webkit-keyframes showicon{
+		0%{
+			width: 0;
+			height: 45px;
+		}
+		100%{
+			width: 45px;
+			height: 45px;
+		}
+	}

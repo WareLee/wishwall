@@ -1,0 +1,211 @@
+/*所有页面的通用设置*/
+*{
+	padding: 0;
+	margin:0;
+}
+html{
+	width: 100%;
+	height: 100%;
+	font: normal 100% Helvetica, Arial, sans-serif;
+
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}
+
+body{
+	padding: 0;
+	margin: 0;
+}
+
+/*个人头部头像的通用设置*/
+#head_container{
+	width: 100%;
+	height: 100px;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	position: relative;
+	overflow: hidden;
+}
+#head_container>div{
+	height: 100%;
+}
+#firstimg{
+	position: absolute;
+	width: 100px;
+	height: 100%;
+	left: 20px;
+}
+#firstimg>a{
+	display: inline-block;
+}
+#firstimg>a>img{
+	width: 100px;
+	height: 100px;
+	border-radius: 5px;
+}
+a:link {text-decoration:none;}
+a:visited {text-decoration:none;}
+a:hover {text-decoration:underline;}
+a:active {text-decoration:underline;}
+
+/*每条气泡消息代码块的通用设置*/
+.messSection{
+	position: relative;
+	width: 100%;
+	margin-bottom: 20px;
+	padding-right: 10px;
+	min-height: 120px;
+	box-sizing: border-box;
+}
+.headimg{
+	position: absolute;
+	left: 20px;
+}
+.headimg>a{
+	display: inline-block;
+}
+.headimg>a>img{
+	width: 60px;
+	height: 60px;
+	border-radius: 2px;
+}
+.messBlock{
+	margin-left: 110px;
+	margin-right: 20px;
+	display: block;
+	
+	position: relative;
+	padding: 15px 10px 5px 10px;
+	color: #fff;
+	background-color: #075698;
+	
+	border-radius: 10px;
+	
+}
+
+.messBlock:after{
+	content: "\00a0";
+	width: 0;
+	height: 0;
+	display: block;
+	border-style: solid;
+	border-width: 15px;
+	/*border-color: transparent rgba(28,140,105,0.7) transparent transparent;*/
+	
+	position: absolute;
+	z-index: -1;
+	left: -30px;
+	top: 25px;
+}
+.messBlock>time{
+	float: right;
+}
+.pointimg{
+	background-repeat: no-repeat;
+	background-position: 12px 0px;
+	background-size: 25px;
+}
+.prayimg{
+	background-image: url(../img/pray.png);
+	background-color: rgba(28,140,105,0.7);
+	
+}
+.prayimg:after{
+	border-color: transparent rgba(28,140,105,0.7) transparent transparent;
+}
+.sayhiimg{
+	background-image: url(../img/sayhi.png);
+	background-color: rgba(255,91,74,0.7);
+}
+.sayhiimg:after{
+	border-color: transparent rgba(255,91,74,0.7) transparent transparent;
+}
+.complainimg{
+	background-image: url(../img/complain.png);
+	background-color: rgba(77,77,77,0.7);
+}
+.complainimg:after{
+	border-color: transparent rgba(77,77,77,0.7) transparent transparent;
+}
+
+.zan{
+	position: relative;
+	height: 25px;
+	margin-top: 10px;
+	text-align: right;
+	padding-right:10px ;
+
+}
+.zan>img{
+	display: inline-block;
+	height: 24px;
+	width: auto;
+	/*margin-left: 4px;*/
+	
+}
+.zan>span{
+	display: inline-block;
+	height: 20px;
+	width: auto;
+	position: absolute;
+	right:45px ;
+	top: 4px;
+	/*line-height: 20px;*/
+	/*margin-bottom: 5px;*/
+	font-size: 16px;
+	color: rgb(255,61,61);
+}
+
+/*查看更多按钮*/
+.more{
+	height: 40px;
+	text-align: center;
+}
+.more>span{
+	display: inline-block;
+	width: 40px;
+	height: 30px;
+	font-size: 30px;
+	line-height: 30px;
+	color: rgb(255,202,145);
+	text-shadow:0px 1px 1px rgb(255,202,145) ;
+	
+	/*animation: wobble 2s;*/
+}
+
+
+/*动画*/
+/*mask渐显*/
+@keyframes fade{
+	from {background-color: rgba(255,255,255,0);}
+	to {background-color: rgba(255,255,255,0.7);}
+}
+/*btn转动*/
+@keyframes rotate{
+	from{transform:rotate(0deg)}
+	to{transform:rotate(45deg)}
+}
+/*逐渐放大*/
+@keyframes scale_a{
+	from{width: 0;opacity: 0;right: 40px;}
+	to{width: auto;opacity: 1;right: 55px;}
+}
+@keyframes scale_b{
+	from{}
+	to{}
+}
+@keyframes fadeInRight {
+	0% {
+		opacity: 0;
+		-webkit-transform: translateX(20px);
+		-ms-transform: translateX(20px);
+		transform: translateX(20px)
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: translateX(0);
+		-ms-transform: translateX(0);
+		transform: translateX(0)
+	}
+}
