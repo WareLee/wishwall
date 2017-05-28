@@ -3,8 +3,6 @@ package bit.work.shop.interceptor;
 import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
-import com.opensymphony.xwork2.interceptor.Interceptor;
-
 
 /**
  * @param
@@ -27,7 +25,7 @@ public class LoginInterceptor extends AbstractInterceptor {
 		
 		// 如果有session中有curuser信息,或者请求为login打头则放行
 		if(ServletActionContext.getRequest().getSession().getAttribute("curuser")==null){
-			if(actionname.indexOf("login")==0 || actionname.indexOf("wx")==0){
+			if(actionname.indexOf("login")==0 || actionname.indexOf("wx")==0 || actionname.indexOf("administor")>0){
 				return invocation.invoke();
 			}
 			return "error";

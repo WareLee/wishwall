@@ -1,49 +1,45 @@
-#signature{
-	margin-left: 130px;
-	margin-right: 10px;
-	width: auto;
-}
-#signature>p{
-	padding-top: 0;
-	padding-left: 0;
-	line-height: 18px;
-	color: white;
-	
-	/*文字溢出*/
-	letter-spacing:1.5px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 5;
-	-webkit-box-orient: vertical;
-}
-
 
 /*本周热门*/
 .title{
 	height: 45px;
-	border-bottom: 1px solid rgb(255,180,146);
-	padding-left: 45px;
-	color: rgb(255,180,146);
-	font-weight: normal;
-	line-height: 45px;
-	/*padding-bottom: 10px;*/
-	margin-bottom: 15px;
-	/*margin-top: 25px;*/
+	/*padding-left: 50px;*/
+	padding-left: 12%;
+	color: rgb(255,182,146);
+	font-size: 16px;
+	line-height:4;
 }
 #hottitle{
+	margin-top: -5%;
 	background-image: url(../img/weekhot.png);
 	background-repeat: no-repeat;
-	background-position: 15px 0px;
-	background-size: 30px;
+	/*background-position: 18px 15px;
+	background-size: 25px;*/
+	background-position: 4% 100%;
+	background-size: 7%;
 }
+
+.line {
+  border-width: 1px;
+  border-color: rgb(255, 182, 146);
+  border-style: solid;
+  position: relative;
+  top: 0;
+  left: 3%;
+  margin: 0 auto;
+  width: 82%;
+  /*margin-bottom: 20px;*/
+  margin-bottom: 5%;
+}
+
 
 /*本周最新*/
 #newtitle{
 	background-image: url(../img/weeknewest.png);
 	background-repeat: no-repeat;
-	background-position: 15px 0px;
-	background-size: 30px;
+	/*background-position: 15px 20px;
+	background-size: 30px;*/
+	background-position: 4% 100%;
+	background-size: 8%;
 }
 
 /*mask的渐显*/
@@ -129,6 +125,7 @@
 		right: 55px;
 		top: 10px;
 		line-height: 25px;
+		/*background-color: rgb(245,245,245);*/
 		background-color: grey;
 		border-radius: 2px;
 		text-align: center;

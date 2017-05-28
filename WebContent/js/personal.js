@@ -1,9 +1,31 @@
 $(document).ready(function() {
-//	backAndRefresh();
 	getMoreSelfInf();
 	deleteMess();
 });
 
+function deleteit(mid,obj){
+	layer.open({
+    content: '确定要删除吗？'
+    ,btn: ['确定', '不要']
+    ,yes: function(index){
+      layer.close(index);
+      $.ajax({
+					url: 'enter/messPage_deleteMess.action?targetMid='+mid,     //要访问的service路径
+					type: "get",        //访问实现的方式:get 或 post
+					async:true,      //是否异步
+					cache:false,      //是否缓存
+					success:function(result){    //请求成功后执行
+						obj.css('display','none'); 
+						//window.location.reload();
+						//刷新当前页面.
+					}
+				});
+    },
+    no:function(index){
+    	layer.close(index);
+    }
+  });
+}
 
 function getMoreSelfInf(){
 	$("#moreSelfInf>span").click(
@@ -13,34 +35,11 @@ function getMoreSelfInf(){
 	);
 }
 
-function deleteMess(){
-	$(".messBlock>img").click(
-			function(){
-				var mid=$(this).attr("mid");
-				var messNum=parseInt($("#messNum").text());
-				$("#messNum").text((messNum-1)+"个愿望");
-				$(this).parent().parent('.messSection').css('display','none');
-				$.ajax({
-					url: 'enter/messPage_deleteMess.action?targetMid='+mid,     //要访问的service路径
-					type: "get",        //访问实现的方式:get 或 post
-					async:true,      //是否异步
-					cache:false,      //是否缓存
-					success:function(result){    //请求成功后执行
-//						 window.location.reload();//刷新当前页面.
-					}
-				});
-			}
-	);
+function deleteMess(event){
+	$("button.del").live("click",function(){
+		var mid=$(this).children('img').eq(0).attr("mid");
+		var obj= $(this).closest('.messSection');
+		deleteit(mid,obj);
+	});
 }
 
-//function backAndRefresh(){
-//    var counter = 0;
-//    if (window.history && window.history.pushState) {
-//             $(window).on('popstate', function () {
-//            	 window.location.href = document.referrer;
-//             });
-//      }
-//
-//      window.history.pushState('forward', null, '#'); //在IE中必须得有这两行
-//      window.history.forward(1);
-//}

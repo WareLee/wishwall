@@ -11,21 +11,22 @@ public class Message {
 	private Integer mid;
 	private Integer uid;
 	private String content;
-	private Integer anonymity;
+	private Integer anonymity=0;
 	private Integer zantimes;
 	private String mtype;
 	private String headimgurl;
 	private String nickname;
 	private String toyou;
 	private String fromname;
-	private Integer state;
+	private Integer sstate;
 	private Timestamp detailtime;
+	
 	
 	// 用于将timestamp简化输出,并不在t_message表中 
 	private String simpleTime;
 
-	// 用于查询展示消息使用到,并不在t_message表中 
-	private int sstate;
+	// 用于查询展示消息使用到,并不在t_message表中 --本消息是不是当前用户所发
+	private Integer state;
 	
 	public Timestamp getDetailtime() {
 		return detailtime;
@@ -125,7 +126,7 @@ public class Message {
 		this.fromname = fromname;
 	}
 
-	public int getAnonymity() {
+	public Integer getAnonymity() {
 		return anonymity;
 	}
 

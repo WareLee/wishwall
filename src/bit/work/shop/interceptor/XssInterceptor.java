@@ -1,7 +1,6 @@
 package bit.work.shop.interceptor;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.struts2.dispatcher.HttpParameters;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -9,9 +8,10 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 import bit.work.shop.utils.XssShieldUtil;
-import org.apache.struts2.dispatcher.Parameter;
 
 public class XssInterceptor extends AbstractInterceptor{
+
+	private static final long serialVersionUID = 7296129163234205866L;
 
 	/**
 	 * 预防xxs攻击...未测试

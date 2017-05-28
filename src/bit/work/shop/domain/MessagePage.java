@@ -15,6 +15,18 @@ public class MessagePage {
 	private int zongshu; // 总记录数
 	private int havemore; // 剩余消息数,以此判断是否有更多消息
 	
+	// 为考虑背景设置的字段
+	private String bg="animal.png";
+	
+	
+	public String getBg() {
+		return bg;
+	}
+
+	public void setBg(String bg) {
+		this.bg = bg;
+	}
+
 	public int getHavemore() {
 		return havemore;
 	}

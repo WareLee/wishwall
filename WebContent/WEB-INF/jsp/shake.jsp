@@ -7,191 +7,198 @@
 		<meta charset="UTF-8">
 		<title>摇一摇</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	</head>
 	
-	<link rel="stylesheet" href="../css/public.css" />
-	<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
-	<script type="text/javascript" src="../js/public.js"></script>
+		<link rel="stylesheet" href="../css/public.css" />
+		<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="../js/public.js"></script>
 	
-	<style type="text/css">
-		* {
-				margin: 0;
-				padding: 0;
+		<style type="text/css">
+			* {
+					margin: 0;
+					padding: 0;
+				}
+			
+			body {
+				/*background: #292D2E;*/
+				background-color: gray;
 			}
-		
-		body {
-			background: #292D2E;
-		}
-		
-		.bar{
-			position: absolute;
-			width: 100%;
-			height: 35px;
-			top: 20px;
-			background-color: rgba(91,91,91,0.7);
-		}
-		.shake{
-			width: 100%;
-			height: 100%;
-			margin-top: 40%;
-			text-align: center;	
-		}
-		.shake>img{
-			width: 200px;
-			height: auto;
-			-webkit-transform: rotate(-7deg);
-			-moz-transform: rotate(-7deg);
-			-ms-transform: rotate(-7deg);
-			-o-transform: rotate(-7deg);
-			transform: rotate(-7deg);
-		}
-		
-		.shake-animate {
-			-webkit-animation: hand_move infinite 2s;
-		}
-		@-webkit-keyframes hand_move {
-				0% {
-					-webkit-transform: rotate(0);
-					-moz-transform: rotate(0);
-					-ms-transform: rotate(0);
-					-o-transform: rotate(0);
-					transform: rotate(0);
-				}
-				50% {
-					-webkit-transform: rotate(15deg);
-					-moz-transform: rotate(15deg);
-					-ms-transform: rotate(15deg);
-					-o-transform: rotate(15deg);
-					transform: rotate(15deg);
-				}
-				100% {
-					-webkit-transform: rotate(0);
-					-moz-transform: rotate(0);
-					-ms-transform: rotate(0);
-					-o-transform: rotate(0);
-					transform: rotate(0);
-				}
-			}
-		
-		.loading {
+			
+			.bar{
 				position: absolute;
-				top: 70%;
-				left: 50%;
-				margin-left: -50px;
-				width: 100px;
-				height: 100px;
-				background: url(../img/spinner.png) no-repeat;
-				background-size: 100px 100px;
-				opacity: 0;
-				-webkit-animation: loading infinite linear .5s;
-				-moz-animation: loading infinite linear .5s;
-				-ms-animation: loading infinite linear .5s;
-				-o-animation: loading infinite linear .5s;
-				animation: loading infinite linear .5s;
-				-webkit-transition: all .5s;
-				-moz-transition: all .5s;
-				-ms-transition: all .5s;
-				-o-transition: all .5s;
-				transition: all .5s;
+				width: 100%;
+				height: 35px;
+				top: 20px;
+				background-color: rgba(91,91,91,0.7);
+			}
+			.shake{
+				width: 100%;
+				height: 100%;
+				margin-top: 40%;
+				text-align: center;	
+			}
+			.shake img{
+				width: 200px;
+				height: auto;
+				-webkit-transform: rotate(-7deg);
+				-moz-transform: rotate(-7deg);
+				-ms-transform: rotate(-7deg);
+				-o-transform: rotate(-7deg);
+				transform: rotate(-7deg);
 			}
 			
-		.loading-show {
-			opacity: 1;
-		}
-		
-		@-webkit-keyframes loading {
-				0% {
-					-webkit-transform: rotate(0);
-					-moz-transform: rotate(0);
-					-ms-transform: rotate(0);
-					-o-transform: rotate(0);
-					transform: rotate(0);
+			.shake-animate {
+				-webkit-animation: hand_move infinite 2s;
+			}
+			@-webkit-keyframes hand_move {
+					0% {
+						-webkit-transform: rotate(0);
+						-moz-transform: rotate(0);
+						-ms-transform: rotate(0);
+						-o-transform: rotate(0);
+						transform: rotate(0);
+					}
+					50% {
+						-webkit-transform: rotate(15deg);
+						-moz-transform: rotate(15deg);
+						-ms-transform: rotate(15deg);
+						-o-transform: rotate(15deg);
+						transform: rotate(15deg);
+					}
+					100% {
+						-webkit-transform: rotate(0);
+						-moz-transform: rotate(0);
+						-ms-transform: rotate(0);
+						-o-transform: rotate(0);
+						transform: rotate(0);
+					}
 				}
-				100% {
-					-webkit-transform: rotate(360deg);
-					-moz-transform: rotate(360deg);
-					-ms-transform: rotate(360deg);
-					-o-transform: rotate(360deg);
-					transform: rotate(360deg);
+			
+			.loading {
+					position: absolute;
+					top: 70%;
+					left: 50%;
+					margin-left: -50px;
+					width: 100px;
+					height: 100px;
+					background: url(../img/spinner.png) no-repeat;
+					background-size: 100px 100px;
+					opacity: 0;
+					-webkit-animation: loading infinite linear .5s;
+					-moz-animation: loading infinite linear .5s;
+					-ms-animation: loading infinite linear .5s;
+					-o-animation: loading infinite linear .5s;
+					animation: loading infinite linear .5s;
+					-webkit-transition: all .5s;
+					-moz-transition: all .5s;
+					-ms-transition: all .5s;
+					-o-transition: all .5s;
+					transition: all .5s;
 				}
-			}	
+				
+			.loading-show {
+				opacity: 1;
+			}
 			
+			@-webkit-keyframes loading {
+					0% {
+						-webkit-transform: rotate(0);
+						-moz-transform: rotate(0);
+						-ms-transform: rotate(0);
+						-o-transform: rotate(0);
+						transform: rotate(0);
+					}
+					100% {
+						-webkit-transform: rotate(360deg);
+						-moz-transform: rotate(360deg);
+						-ms-transform: rotate(360deg);
+						-o-transform: rotate(360deg);
+						transform: rotate(360deg);
+					}
+				}	
+				
+				
+			.mess{
+				display: none;
+			}
+			.mess-hid{
+				display: none;
+			}
+			.mess-show{
+				display: block;
+			}
+			.xiaoguo-hid{
+				display: none;
+			}
+			.xiaoguo-show{
+				display: block;
+			}
 			
-		.mess{
-			display: none;
-		}
-		.mess-hid{
-			display: none;
-		}
-		.mess-show{
-			display: block;
-		}
-		.xiaoguo-hid{
-			display: none;
-		}
-		.xiaoguo-show{
-			display: block;
-		}
-		
+				
+			#mess{
+				width:100%;
+			}
+			#header{
+				text-align: center;
+				width: 100%;
+				height: auto;
+				margin-top: 60px;
+				margin-bottom: 40px;
+			}
 			
-		#mess{
-			width:100%;
-		}
-		#header{
-			text-align: center;
-			width: 100%;
-			height: auto;
-			margin-top: 60px;
-			margin-bottom: 40px;
-		}
-		
-		#header>a>img{
-			width: 65px;
-			height: 65px;
-			/*display: inline-block;*/
-			border-radius: 5px;
-		}
-		.messBlock{
-			/*margin-left: 50px;*/
-			margin-left: 55px;
-			margin-right: 40px;
-		}
-		
-		#shake{
-			width: 100%;
-			height: 30px;
-			position: fixed;
-			bottom: 0;
-			line-height: 30px;
-			text-align: center;
-			color: white;
-			background-color: rgba(255,185,62,0.7);
-		}
-		
-	</style>
+			#header>a>img{
+				width: 65px;
+				height: 65px;
+				/*display: inline-block;*/
+				border-radius: 5px;
+			}
+			.messBlock{
+				/*margin-left: 50px;*/
+				margin-left: 55px;
+				margin-right: 40px;
+			}
+			
+			#shake{
+				width: 100%;
+				height: 30px;
+				position: fixed;
+				bottom: 0;
+				line-height: 30px;
+				text-align: center;
+				color: white;
+				background-color: rgba(255,185,62,0.7);
+			}
+			
+		</style>
+	</head>
+	<link rel="icon" href="../img/aa.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="../img/aa.ico">
+	<link rel="Bookmark" href="../img/aa.ico">
 			
 	<body>
 
 		<section id="xiaoguo">
 			<div class="bar"></div>
-			<div class="shake shake-animate"><img src="../img/shakeit.png" alt="shake it" /></div>
+			<div class="shake shake-animate"><img src="../img/onecopy.png" alt="shake it"></div>
 			<div id="loading" class="loading"></div>
 		</section>
 		
 		<section class="mess" id="mess">
 			<div id="header">
-				<a href="#"><img src="#"/></a>
+				<a href="#"><img src=""></a>
 			</div>
 			<section>
 				<section class="messSection">
 						<blockquote class="messBlock prayimg pointimg">
-							<b class="from">From:Bitwork</b>
-							<p class="message"></p>
 							<b class="to"></b>
+							<p class="message"></p>
+							<b class="from">From:Bitwork</b>
 							<time datetime="" class="dtt"></time>
 						</blockquote>
 						<div class="zan">
-							<span></span><img src="#" mid="0" />
+							<span></span>
+							<button style="border:none;background:none;">
+								<img src="" mid="0">
+							</button>
 						</div>
 				</section>
 			</section>
@@ -232,7 +239,7 @@
 					var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
 					
 					if(speed > SHAKE_THRESHOLD && state) {
-						state= !state;
+						state= false;
 						doResult();
 					}
 					last_x = x;
@@ -295,13 +302,14 @@
 				$(".zan>span").text(result['zantimes']+'赞');
 				
 				if(result['sstate']>0){
-					$(".zan>img").attr('src','../img/heart_red.png');
+					$(".zan>button>img").attr('src','../img/heart_red.png');
 				}else{
-					$(".zan>img").attr('src','../img/heart_white.png');
+					$(".zan>button>img").attr('src','../img/heart_white.png');
 				}
-				$(".zan>img").attr('mid',result['mid']);
+				$(".zan>button>img").attr('mid',result['mid']);
 				
 			}
+			
 		</script>
 		
 	</body>

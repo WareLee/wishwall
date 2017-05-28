@@ -3,16 +3,16 @@
     <default-config>
         <property name="driverClass">com.mysql.jdbc.Driver</property>
         <property name="jdbcUrl">
-            <![CDATA[jdbc:mysql://127.0.0.1:3306/dreamwall2?useUnicode=true&characterEncoding=UTF-8]]>
+             <![CDATA[jdbc:mysql://xxx.xxx.xxx.xxx:3306/dreamwall?useUnicode=true&characterEncoding=UTF-8]]>
         </property>
         <property name="user">root</property>
-        <property name="password">1234</property>
+        <property name="password">xxx</property>
         <!-- 初始化池大小 -->
-        <property name="initialPoolSize">2</property>
+        <property name="initialPoolSize">5</property>
         <!-- 最大空闲时间 -->
         <property name="maxIdleTime">10</property>
         <!-- 最多有多少个连接 -->
-        <property name="maxPoolSize">5</property>
+        <property name="maxPoolSize">15</property>
         <!-- 最少几个连接 -->
         <property name="minPoolSize">2</property>
         <!-- 每次最多可以执行多少个批处理语句 -->

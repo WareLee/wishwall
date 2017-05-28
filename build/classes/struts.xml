@@ -7,9 +7,10 @@
 	<constant name="struts.i18n.encoding" value="UTF-8"/>
 	<constant name="struts.serve.static.browserCache" value="false"/>
 	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
-    <constant name="struts.devMode" value="true" />
+    <constant name="struts.devMode" value="false" />
     <constant name="struts.configuration.xml.reload" value="true" />
     <constant name="struts.action.extension" value="action" />
+ 	<constant name="struts.multipart.saveDir" value="/tmp" />
  
 	<package name="base" extends="struts-default">
 		<global-results>
@@ -40,17 +41,24 @@
 		
 		<action name="login_*" class="bit.work.shop.action.WXCode" method="{1}">
 			<result name="home" type="chain">homePage_getHome</result>
-			<allowed-methods>temp,getUserinfo</allowed-methods> 
+			<allowed-methods>getUserinfo</allowed-methods> 
+		</action>
+		<action name="file_*" class="bit.work.shop.action.FileUploadAction" method="{1}">
+			<result name="bgs">/WEB-INF/jsp/bgs.jsp</result>
+			<allowed-methods>fileUpload</allowed-methods> 
 		</action>
 		<action name="homePage_*" class="bit.work.shop.action.HomeAction" method="{1}">
+			<result name="administor">/WEB-INF/jsp/administor.jsp</result>
+			<result name="bgs">/WEB-INF/jsp/bgs.jsp</result>
 			<result name="homeJsp">/WEB-INF/jsp/home.jsp</result>
 			<result name="prayJsp">/WEB-INF/jsp/directmess.jsp</result>
 			<result name="shakeJsp">/WEB-INF/jsp/shake.jsp</result>
-			<allowed-methods>getHome,getMoreMess,doZan,toPray,toShake</allowed-methods>
+			<allowed-methods>getHome,getMoreMess,doZan,toPray,toShake,showBgs,administor</allowed-methods>
 		</action>
 		<action name="userPage_*" class="bit.work.shop.action.UserAction" method="{1}">
+			<result type="redirectAction" name="home">homePage_getHome</result>
 			<result name="personalJsp">/WEB-INF/jsp/person.jsp</result>
-			<allowed-methods>getTargetHome</allowed-methods> 
+			<allowed-methods>getTargetHome,bgChoose</allowed-methods> 
 		</action>
 		
 		<action name="messPage_*" class="bit.work.shop.action.MessageAction" method="{1}">

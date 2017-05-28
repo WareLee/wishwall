@@ -12,22 +12,17 @@ import bit.work.shop.domain.Message;
 import bit.work.shop.domain.User;
 
 /**
- * @param
- * @return
- * @throws Exception
  * @author ware E-mail:
- * @version create time: 20172017年3月10日下午2:23:19
  */
 public class UserAction extends BaseAction{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int targetUid; // 要查詢的目標用戶uid
 	private User targetUser; // 要查询的目标用户
 	private List<Message> targetMess; // 目标用户的所有消息
 	private int size=0; // 用户发送的消息数
 	private boolean self=false; // 是用户本身吗
+	
+	private String bground="bg_default.jpg";
 	
 	// 根据目标用户的uid查询对应用户的消息
 	public String getTargetHome() throws SQLException{
@@ -47,13 +42,36 @@ public class UserAction extends BaseAction{
 		
 		return "personalJsp";
 	}
-
 	
+	// 设置用户背景
+	public String bgChoose(){
+		ActionContext ctx = ActionContext.getContext();
+		User curUser = (User) ctx.getSession().get("curuser");
+		int uid = curUser.getUid();
+		
+		UserDao dao=new UserDao();
+		int effect = dao.setBg(bground, uid);
+		// 修改成功
+		if(effect>0){
+			curUser.setBground(bground);
+		}
+		
+		return "home";
+	}
+
 	// ---------
 	
 	
 	public int getTargetUid() {
 		return targetUid;
+	}
+
+	public String getBground() {
+		return bground;
+	}
+
+	public void setBground(String bground) {
+		this.bground = bground;
 	}
 
 	public boolean isSelf() {

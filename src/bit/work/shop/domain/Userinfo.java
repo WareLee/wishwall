@@ -1,4 +1,6 @@
 package bit.work.shop.domain;
+
+
 /**
  * @param
  * @return
@@ -7,6 +9,7 @@ package bit.work.shop.domain;
  * @version create time: 20172017年3月9日下午3:55:20
  */
 public class Userinfo {
+	
 	private String openid;
 	private String nickname;
 	private String headimgurl;

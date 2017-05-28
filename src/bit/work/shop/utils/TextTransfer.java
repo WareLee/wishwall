@@ -2,6 +2,11 @@ package bit.work.shop.utils;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Queue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import net.sf.json.JSONObject;
 
 /**
@@ -57,4 +62,37 @@ public class TextTransfer {
 		    }   
 		    return "刚刚";   
 		}  
+		
+		public static boolean isRobot(Queue<Long> queue, Long limit){
+			// 如果长度小于5, 直接通过
+			if(queue.size() < 5){
+				 return false;
+			}
+			Iterator<Long> iterator = queue.iterator();
+			Long temp = iterator.next();
+			Long sum= 0L;
+			while (iterator.hasNext()) {
+				Long tt=iterator.next();
+				sum = sum + Math.abs(tt-temp);
+				temp=tt;
+			}
+			
+			return sum < (limit * (queue.size()-1));
+		}
+		
+		public static String filterEmoji(String source) { 
+	        if(source != null)
+	        {
+	            Pattern emoji = Pattern.compile ("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",Pattern.UNICODE_CASE | Pattern . CASE_INSENSITIVE );
+	            Matcher emojiMatcher = emoji.matcher(source);
+	            if ( emojiMatcher.find())
+	            {
+	                source = emojiMatcher.replaceAll("[表情]");
+	                return source ;
+	            }
+	        return source;
+	       }
+	       return source; 
+	    }
 }
+

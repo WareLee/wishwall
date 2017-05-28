@@ -1,4 +1,7 @@
 package bit.work.shop.domain;
+
+import java.sql.Timestamp;
+
 /**
  * @param
  * @return
@@ -13,7 +16,31 @@ public class User {
 	private String headimgurl;
 	private String signature;
 	private String bground;
+	private Integer sysnotify;
+	private Integer usenotify;
+	private Timestamp lastupdate;
 	
+	public Timestamp getLastupdate() {
+		return lastupdate;
+	}
+	public void setLastupdate(Timestamp lastupdate) {
+		this.lastupdate = lastupdate;
+	}
+	public void setUid(Integer uid) {
+		this.uid = uid;
+	}
+	public Integer getSysnotify() {
+		return sysnotify;
+	}
+	public void setSysnotify(Integer sysnotify) {
+		this.sysnotify = sysnotify;
+	}
+	public Integer getUsenotify() {
+		return usenotify;
+	}
+	public void setUsenotify(Integer usenotify) {
+		this.usenotify = usenotify;
+	}
 	public int getUid() {
 		return uid;
 	}

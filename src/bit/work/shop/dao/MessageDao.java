@@ -6,19 +6,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 import bit.work.shop.domain.Message;
 import bit.work.shop.domain.MessagePage;
 import bit.work.shop.utils.C3P0Utils;
 import bit.work.shop.utils.HackerNewsSort;
+import bit.work.shop.utils.Heap;
+import bit.work.shop.utils.HotNode;
 import bit.work.shop.utils.TextTransfer;
-import bit.work.shop.utils.ValueComparator;
 
 /**
  * @throws Exception
@@ -27,17 +27,17 @@ import bit.work.shop.utils.ValueComparator;
  */
 public class MessageDao {
 	// 		根据mid的map获取对应的mid消息---最热
-	public List<Message> hotMessage(TreeMap<Integer,Double> mids,int curuid){
-		List<Message> messages=new ArrayList<>();
+	public List<Message> hotMessage(List<Integer> mids,int curuid){
+		List<Message> messages=new LinkedList<Message>();
 		
 		// 组装sql
 		String sql="SELECT m.*,z.sstate FROM ("
 				+ "SELECT me.*,us.nickname,us.headimgurl FROM ("
 				+ "select * from t_message where mid in(";
-		if(mids.keySet().isEmpty()){
+		if(mids==null || mids.size()==0){
 			sql += "-1";
 		}else{
-			for(Integer mid:mids.keySet()){
+			for(Integer mid:mids){
 				sql = sql+mid+",";
 			}
 			sql=sql.substring(0,sql.length()-1);
@@ -84,59 +84,84 @@ public class MessageDao {
 			}
 		}
 		
+		// 将顺序纠正一下
+		for(Integer mid: mids){
+			int len=messages.size();
+			for(int i=0;i<len;i++){
+				if((int)messages.get(i).getMid() == (int) mid){
+					messages.add(messages.remove(i));
+				}
+			}
+		}
+		
 		return messages;
 	}
 	
+	
 	//获取前一周的赞数超过0的消息并打分排序<mid,score>
-	public TreeMap<Integer,Double> getHotMessMids(){
-		
-		// 获取据当前一周的时间
-		Timestamp lastWeek = HackerNewsSort.getLastWeek();
-		Connection conn = C3P0Utils.getConnection();
-		String sql = "SELECT mid,detailtime,zantimes FROM t_message WHERE zantimes>0 and detailtime>? ";
-		
-		PreparedStatement stmt=null;
-		ResultSet rs=null;
-		HashMap<Integer,Double> map=null;
-		try {
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, lastWeek.toString());
-			rs = stmt.executeQuery();
+		public List<Integer> getHotMessMids(){
+			
+			// 获取据当前一周的时间
+			Timestamp lastWeek = HackerNewsSort.getLastWeek();
+			Connection conn = C3P0Utils.getConnection();
+			String sql = "SELECT mid,detailtime,zantimes FROM t_message WHERE zantimes>0 and detailtime>? ";
+			
 			
 			// 为计算热度做准备
-			map = new HashMap<Integer,Double>();
+			ArrayList<HotNode> nodes=new ArrayList<HotNode>();
 			Timestamp end=new Timestamp(new Date().getTime());
 			DecimalFormat accuracy=new DecimalFormat("0.00000");
 			
-			while(rs.next()){
-				map.put(rs.getInt("mid"), 
-						HackerNewsSort.hackerScore(rs.getInt("zantimes"), rs.getTimestamp("detailtime"), end, 1.5, accuracy));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
+			PreparedStatement stmt=null;
+			ResultSet rs=null;
 			try {
-				if(rs!=null) rs.close();
-				if(stmt!=null) stmt.close();
-				if(conn!=null) conn.close();
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, lastWeek.toString());
+				rs = stmt.executeQuery();
+				
+				while(rs.next()){
+					HotNode node=new HotNode();
+					node.setMid(rs.getInt("mid"));
+					node.setScore(HackerNewsSort.hackerScore(rs.getInt("zantimes"), rs.getTimestamp("detailtime"), end, 1.5, accuracy));
+					nodes.add(node);
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}finally{
+				try {
+					if(rs!=null) rs.close();
+					if(stmt!=null) stmt.close();
+					if(conn!=null) conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			
+			// 对map根据value值排序
+			Heap.heapSort(nodes);
+			
+			List<Integer> copyed=new ArrayList<Integer>();
+			int len= nodes.size() < 6 ? nodes.size() : 6 ;
+			for(int i=0; i< len ;i++ ){
+				copyed.add(nodes.get(i).getMid());
+			}
+			
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+			java.util.Date date=new java.util.Date();  
+			String str=sdf.format(date);  
+			
+			System.out.println("hotmessage 统计中...."+str);
+			
+			return copyed;
 		}
-		
-		// 对map根据value值排序
-		TreeMap<Integer,Double> sorted_map=null;
-		if(map!=null){
-			ValueComparator bvc =  new ValueComparator(map);  
-	        sorted_map = new TreeMap<Integer,Double>(bvc);
-	        sorted_map.putAll(map);
-		}
-		
-		return sorted_map;
-	}
     
-	// 根据偏移获取最新的几条数据,不知道为什么直接使用TreeMap的containsKey会中途中断
-	public MessagePage getMess(int zongshu,int yema , int yechang,int curuid, TreeMap<Integer, Double> hotMessMid){
+	// 根据偏移获取最新的几条数据
+	public MessagePage getMess(int zongshu,int yema , int yechang,int curuid, List<Integer> hotMessMid){
+		// 防止空指针异常
+		if(hotMessMid==null){
+			hotMessMid=new ArrayList<Integer>();
+		}
+		
 		MessagePage messagePage = new MessagePage();
 		int offset=zongshu-(yema+1)*yechang;
 		int amount=yechang;
@@ -151,10 +176,6 @@ public class MessageDao {
 		}
 		
 		List<Message> thenewes=new ArrayList<Message>();
-		TreeSet<Integer> indexs=new TreeSet<>();
-		for(Integer ind:hotMessMid.keySet()){
-			indexs.add(ind);
-		}
 		
 		String sql = "SELECT m.*,z.sstate FROM "
 				+ " (SELECT me.*,us.nickname,us.headimgurl FROM t_message me,t_user us WHERE me.uid=us.uid ORDER BY me.mid asc LIMIT ?,? ) AS m "
@@ -172,7 +193,7 @@ public class MessageDao {
 			while(rs.next()){
 				
 //				if(!hotMessMid.containsKey(rs.getInt("mid"))){
-				if(! indexs.contains(rs.getInt("mid"))){
+				if(! hotMessMid.contains(rs.getInt("mid"))){
 					
 					Message mess=new Message();
 					mess.setMid(rs.getInt("mid"));
@@ -245,7 +266,7 @@ public class MessageDao {
 		return zongshu;
 	}
 	
-	public MessagePage getNewestMess(int curUid, TreeMap<Integer, Double> hotMessMid) {
+	public MessagePage getNewestMess(int curUid, List<Integer> hotMessMid) {
 		int zongshu=getCount();
 		
 		return getMess(zongshu, 0, 10, curUid, hotMessMid);
@@ -316,14 +337,21 @@ public class MessageDao {
 	public int deleteMessage(int targetMid, int curUid) {
 		Connection conn = C3P0Utils.getConnection();
 		// 删除message,mid表被操作的mid
-		String sql = "delete from t_message where mid=? and uid=?";
+		String sql ="";
+		if(curUid==1){
+			sql= "delete from t_message where mid=? ";
+		}else{
+			sql= "delete from t_message where mid=? and uid=? ";
+		}
 		PreparedStatement ps=null;
 		int affect=0;
 		
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, targetMid);
-			ps.setInt(2, curUid);
+			if(curUid > 1){
+				ps.setInt(2, curUid);
+			}
 			affect = ps.executeUpdate();
 			
 			// 删除相关的赞消息
@@ -379,12 +407,13 @@ public class MessageDao {
 		return rows;
 	}
 	
+	
 	// 根據用戶的uid查詢對應用戶的所有消息
 	public List<Message> getMessByUid(int curUid, int targetUid){
 		
 		List<Message> messList = new ArrayList<Message>();
 
-		String sql = "SELECT m.*,z.sstate FROM (SELECT me.*,us.nickname,us.headimgurl FROM t_message me,t_user us WHERE me.uid=? and me.anonymity<? and me.uid=us.uid ORDER BY MID DESC) AS m LEFT JOIN (SELECT MID,sstate FROM t_zan WHERE uid=? ) AS z ON m.mid=z.mid";
+		String sql = "( SELECT m.*,z.sstate FROM (SELECT me.*,us.nickname,us.headimgurl FROM t_message me,t_user us WHERE me.uid=? and me.anonymity<? and me.uid=us.uid ) AS m LEFT JOIN (SELECT MID,sstate FROM t_zan WHERE uid=? ) AS z ON m.mid=z.mid ) ORDER BY mid DESC";
 		Connection conn = C3P0Utils.getConnection();
 		// 找到用户uid=1的用户的所有消息,降序排列, 第一个uid为被查看的用户uid, 第二个uid为当前的用户
 		PreparedStatement ps=null;
@@ -416,6 +445,8 @@ public class MessageDao {
 				mess.setToyou(rs.getString("toyou"));
 				mess.setFromname(rs.getString("fromname"));
 				mess.setHeadimgurl(rs.getString("headimgurl"));
+				
+				mess.setState(curUid==targetUid ? 1 : 0 );
 				messList.add(mess);
 			}
 		} catch (SQLException e) {
@@ -483,5 +514,5 @@ public class MessageDao {
 			return mess;
 			
 	}
-	
+
 }

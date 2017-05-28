@@ -2,17 +2,17 @@ $(document).ready(function() {
 	clickHeart();
 });
 function clickHeart(){
-	$(".zan>img").live("click",function (){
-		var imgsrc=$(this).attr('src');
-		var mid=$(this).attr('mid');
+	$(".zan>button").live("click",function (){
+		var imgsrc=$(this).children("img").eq(0).attr('src');
+		var mid=$(this).children("img").eq(0).attr('mid');
 		var zanNum=parseInt($(this).siblings().eq(0).text());
 		if(imgsrc=='../img/heart_red.png'){
-			$(this).attr('src','../img/heart_white.png');
+			$(this).children("img").eq(0).attr('src','../img/heart_white.png');
 			if(zanNum>0){
 				$(this).siblings().eq(0).text((zanNum-1)+'赞');
 			}
 		}else{
-			$(this).attr('src','../img/heart_red.png');
+			$(this).children("img").eq(0).attr('src','../img/heart_red.png');
 			$(this).siblings().eq(0).text((zanNum+1)+'赞');
 		}
 		

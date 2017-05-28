@@ -1,7 +1,6 @@
 package bit.work.shop.action.wx;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import org.apache.struts2.ServletActionContext;
 

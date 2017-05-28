@@ -24,21 +24,12 @@ import java.util.Date;
  */
 public class HackerNewsSort {
 
-//	public static void main(String[] args) throws Exception {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss");
-//		Date tt=sdf.parse("2016.10.14-18:00:01");
-//		java.sql.Timestamp start = new Timestamp(tt.getTime());
-//		java.sql.Timestamp end = new Timestamp(new Date().getTime());
-//
-//		double temp=hackerNews(40, start, end, 1.8, new DecimalFormat("#.00000"));
-//		System.out.println(temp);
-//	}
 
 	// 根据时间戳返回距离当前时刻的小时数,采用进一法
 	public static double hoursPast(Timestamp start,Timestamp end) {
 		Long ms = end.getTime() - start.getTime();
-		Long tt = ms / 100000L;
-		return tt.doubleValue()/36.0;
+		Long tt = ms / 1000L;
+		return tt.doubleValue()/60.0;
 	}
 	
 	// 据当前一周的timestamp
@@ -56,7 +47,7 @@ public class HackerNewsSort {
 	 * @return
 	 */
 	public static double hackerScore(int point,Timestamp start,Timestamp end,double gravity,DecimalFormat accuracy){		
-		double hours=hoursPast(start,end);
+		double hours=Math.abs(hoursPast(start,end));
 		double a=0;
 		if(point>0){
 			a=point;
