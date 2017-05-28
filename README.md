@@ -29,6 +29,6 @@
 	默认为index.jsp, 会自动跳转到code请求连接的,无需改变.
 管理员地址: 
 	域名/应用名/enter/homePage_administor.action?openid=xxxxxxxxxxxxxxxxxxxxxxxxxx
-	该openid为内置到数据库的账号(t_user表中),主要用于非法消息的删除,以及新功能的体验
+	该openid为内置到数据库的账号(t_user表中,一般为第一条记录),主要用于非法消息的删除,以及新功能的体验
 	
 	
